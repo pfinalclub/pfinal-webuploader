@@ -1,12 +1,12 @@
 <?php
 
-namespace PFinal\PFinalWebuploader;
+namespace Pfinal\PfinalWebuploader;
 
 use Illuminate\Support\ServiceProvider;
 
-class PFinalWebuploaderServiceProvider extends ServiceProvider
+class PfinalWebuploaderServiceProvider extends ServiceProvider
 {
-    protected $defer = true; // 延迟加载服务
+    protected $defer = false; // 延迟加载服务
 
     /**
      * Bootstrap services.
@@ -25,7 +25,7 @@ class PFinalWebuploaderServiceProvider extends ServiceProvider
         $this->publishes([$publicPath => public_path('')]);
 
         $viewPath = __DIR__ . '/../resources/views';
-        $this->loadViewsFrom($viewPath, 'pfinal-uploader');
+        $this->loadViewsFrom($viewPath, 'pfinal-webuploader');
 
         //路由
         $routePath = __DIR__ . '/Http/routes.php';
@@ -34,11 +34,7 @@ class PFinalWebuploaderServiceProvider extends ServiceProvider
         }
     }
 
-    /**
-     * Register services.
-     *
-     * @return void
-     */
+
     public function provides()
     {
         return ['pfinal-uploader'];

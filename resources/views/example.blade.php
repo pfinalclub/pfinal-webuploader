@@ -8,6 +8,7 @@
     <title>Document</title>
 </head>
 <body>
+{!! pfw_css() !!}
 这个是包
 </body>
 </html>

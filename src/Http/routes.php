@@ -29,6 +29,6 @@
  *
  */
 
-Route::group(['prefix' => 'pfinal-uploader', 'middleware' => ['web']], function () {
-    Route::get('example', 'PFinal\PFinalWebuploader\Http\Controllers\PFinalWebuploaderController@getExample');
+Route::group(['prefix' => 'pfinal', 'middleware' => ['web']], function () {
+    Route::get('example', '\Pfinal\PfinalWebuploader\Http\Controllers\PfinalWebuploaderController@getExample');
 });

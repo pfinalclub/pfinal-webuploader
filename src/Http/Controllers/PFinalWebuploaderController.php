@@ -29,19 +29,19 @@
  *
  */
 
-namespace PFinal\PFinalWebuploader\Http\Controllers;
+namespace Pfinal\PfinalWebuploader\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 
-class PFinalWebuploaderController extends Controller
+class PfinalWebuploaderController extends Controller
 {
     public function getExample()
     {
         //return 123;
         //return view('pfinal-uploader::example');
         if (config('app.debug', false)) {
-            return view('pfinal-uploader::example');
+            return view('pfinal-webuploader::example');
         } else {
             return 'You can see the example page only in DEBUG mode!';
         }

@@ -9,8 +9,9 @@
   "require": {},
   "autoload": {
     "psr-4": {
-      "PFinal\\PFinalWebuploader\\": "src/"
+      "Pfinal\\PfinalWebuploader\\": "src/"
     },
+
     "files": [
       "src/helpers.php"
     ]
@@ -18,7 +19,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "PFinal\\PFinalWebuploader\\PFinalWebuploaderServiceProvider"
+        "Pfinal\\PfinalWebuploader\\PfinalWebuploaderServiceProvider"
       ],
       "dont-discover": [
         "barryvdh/laravel-debugbar"
