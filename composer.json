@@ -1,0 +1,29 @@
+{
+  "name": "pfinal/pfinal-webuploader",
+  "authors": [
+    {
+      "name": "南丞",
+      "email": "Lampxiezi@163.com"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "PFinal\\PFinalWebuploader\\": "src/"
+    },
+    "files": [
+      "src/helpers.php"
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "PFinal\\PFinalWebuploader\\PFinalWebuploaderServiceProvider"
+      ],
+      "dont-discover": [
+        "barryvdh/laravel-debugbar"
+      ]
+    }
+  },
+  "minimum-stability": "dev"
+}
