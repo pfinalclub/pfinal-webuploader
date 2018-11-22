@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: 运营部
+ * User: 南丞
  * Date: 2018/11/21
  * Time: 15:45
  *
@@ -45,5 +45,10 @@ class PfinalWebuploaderController extends Controller
         } else {
             return 'You can see the example page only in DEBUG mode!';
         }
+    }
+
+    public function postUploadPicture(Request $request)
+    {
+
     }
 }

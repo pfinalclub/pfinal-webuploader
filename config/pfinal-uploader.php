@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: 运营部
+ * User: 南丞
  * Date: 2018/11/21
  * Time: 15:41
  *
@@ -29,6 +29,31 @@
  *
  */
 
+
 return [
-    'options' => []
+    /** 服务端配置 **/
+    'server' => [
+        'upload_img_server' => '/pfinal/example/upload',
+        'upload_img_mode' => [
+            'oss' => [
+                "WEB_URL" => "",
+                "SUCCESS" => 0,
+                "ERROR" => -1,
+                "OSSKEYID" => "",
+                "OSSKEYSECRET" => "",
+                "OSSBUCKET" => "",
+            ],
+            'local' => [
+
+            ]
+        ],
+
+    ],
+
+
+    /** 视图层配置 **/
+    'view' => [
+        'type_view' => 1
+    ]
+
 ];

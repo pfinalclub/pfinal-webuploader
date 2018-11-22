@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: 运营部
+ * User: 南丞
  * Date: 2018/11/21
  * Time: 15:44
  *
@@ -31,4 +31,6 @@
 
 Route::group(['prefix' => 'pfinal', 'middleware' => ['web']], function () {
     Route::get('example', '\Pfinal\PfinalWebuploader\Http\Controllers\PfinalWebuploaderController@getExample');
+    Route::post('upload', '\Pfinal\PfinalWebuploader\Http\Controllers\PfinalWebuploaderController@postUploadPicture');
+
 });
