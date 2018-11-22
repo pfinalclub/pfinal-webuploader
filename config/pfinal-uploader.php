@@ -30,10 +30,11 @@
  */
 
 
+
 return [
     /** 服务端配置 **/
     'server' => [
-        'upload_img_server' => '/pfinal/example/upload',
+        'upload_img_server' => '/pfinal/upload',
         'upload_img_mode' => [
             'oss' => [
                 "WEB_URL" => "",
@@ -50,11 +51,11 @@ return [
 
     ],
 
-
     /** 视图层配置 **/
     'view' => [
         'type_view' => 2,
-        'display' => true
+        'display' => true,
+        'automatic_upload' => true,
     ]
 
 ];
