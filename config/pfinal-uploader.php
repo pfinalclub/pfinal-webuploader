@@ -53,7 +53,8 @@ return [
 
     /** 视图层配置 **/
     'view' => [
-        'type_view' => 1
+        'type_view' => 2,
+        'display' => true
     ]
 
 ];

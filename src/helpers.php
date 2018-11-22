@@ -27,7 +27,7 @@ function pf_js($option = [])
 function pf_field($el = '')
 {
     # 给 $el 这个节点添加视图
-    $type = config('pfinal-uploader.view.type_view');
+    $type = config('pfinal-uploader.view.type_view', 2);
     switch ($type) {
         case 1:
             $html = <<<PF_1
@@ -38,6 +38,7 @@ PF_1;
             $html = <<<PF_2
 <div id="picker">选择文件</div><div class="queueList"></div>
 PF_2;
+            break;
     }
     if ($el) {
         $script = "<script>$('$el').append('$html')</script>";
@@ -47,7 +48,42 @@ PF_2;
     return $script;
 }
 
-function pf_config($el = "picker")
+function pf_config($el = "#picker")
 {
+    $type_view = config('pfinal-uploader.view.type_view', 2);
+    $upload_img_server = config('pfinal-uploader.server.upload_img_server', '/pfinal/example/upload');
+    switch ($type_view) {
+        case 1:
+            break;
+        case 2:
+            $result = _set_uploader($el, $upload_img_server);
+            break;
+    }
+    return $result;
+}
 
+function _set_uploader($el, $upload_img_server)
+{
+    $script = "
+    <script type='text/javascript'>
+    var uploader = WebUploader.create({
+        swf:'/vendor/pfinalWebuploader/dist/Uploader.swf',
+        server:'$upload_img_server',
+        pick:'$el',
+        resize: false,
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*'
+        }
+    })";
+    $display = config('pfinal-uploader.view.display', true);
+    if($display) {
+        //TODO 回显
+        $script .="
+        
+        ";
+    }
+    $script .= "</script>";
+    return $script;
 }
