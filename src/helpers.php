@@ -1,36 +1,11 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: nancheng
- * Date: 2018/11/21
- * Time: 下午10:59
- * Email: Lampxiezi@163.com
- * Blog:  http://friday-go.cc/
+ * wangEditor css 相关依赖
  *
- *                      _ooOoo_
- *                     o8888888o
- *                     88" . "88
- *                     (| ^_^ |)
- *                     O\  =  /O
- *                  ____/`---'\____
- *                .'  \\|     |//  `.
- *               /  \\|||  :  |||//  \
- *              /  _||||| -:- |||||-  \
- *              |   | \\\  -  /// |   |
- *              | \_|  ''\---/''  |   |
- *              \  .-\__  `-`  ___/-. /
- *            ___`. .'  /--.--\  `. . ___
- *          ."" '<  `.___\_<|>_/___.'  >'"".
- *        | | :  `- \`.;`\ _ /`;.`/ - ` : | |
- *        \  \ `-.   \_ __\ /__ _/   .-` /  /
- *  ========`-.____`-.___\_____/___.-`____.-'========
- *                       `=---='
- *  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- *         佛祖保佑       永无BUG     永不修改
- *
+ * @return string
  */
-
-function pfw_css()
+function wi_css()
 {
-    return 123;
+    return '<!--wangEditor css-->
+<link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/twitter-bootstrap/4.1.3/css/bootstrap.css">';
 }
