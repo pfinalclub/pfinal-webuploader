@@ -6,9 +6,13 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    {!! pf_css() !!}
+    {!! pf_js() !!}
 </head>
 <body>
-{!! pf_css() !!}
-这个是包
+
+<div id="content"></div>
+{!! pf_field("#content") !!}
+
 </body>
 </html>
