@@ -44,10 +44,10 @@ return [
                 "OSSBUCKET" => "",
             ],
             'local' => [
-                "filename"=>date('Y/m/d',time())
+                "filename" => date('Y/m/d', time())
             ]
         ],
-        'upload_type'=>'local'
+        'upload_type' => 'local'
     ],
 
 
@@ -55,8 +55,10 @@ return [
     'view' => [
         'type_view' => 2,
         'automatic_upload' => true,
-        'thumbnail'=>[
+        'thumbnail' => [
 
-        ]
+        ],
+        //'fileNumLimit' => 1,
+        'multiple' => true
     ]
 ];

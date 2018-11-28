@@ -65,9 +65,10 @@ function pf_config($option = [], $el = "#picker", $callback = '')
 function _set_uploader($el, $upload_img_server, $option, $callback)
 {
     $accept = config('pfinal-uploader.view.accept', '');
-    $pick = config('pfinal-uploader.view.pick', '');
     $thumb = config('pfinal-uploader.view.thumb', '');
     $auto = config('pfinal-uploader.view.automatic_upload', false);
+    $multiple = config('pfinal-uploader.view.multiple', false);
+    $fileNumLimit = config('pfinal-uploader.view.fileNumLimit', 300);
     $token = csrf_token();
     $thumbnail = config('pfinal-uploader.view.thumbnail', []);
 
@@ -81,11 +82,8 @@ function _set_uploader($el, $upload_img_server, $option, $callback)
             _token :\"{$token}\"
         },
         ";
-    if ($pick) {
-        $script .= "pick:'$pick',";
-    } else {
-        $script .= "pick:'$el',";
-    }
+    $script .= "pick:{id:'$el',multiple:'$multiple'},";
+    $script .= "fileNumLimit:$fileNumLimit,";
     if ($accept) {
         $script .= "accept:'$accept'";
     }
