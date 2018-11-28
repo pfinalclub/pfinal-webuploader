@@ -16,6 +16,9 @@
 </div>
 
 {!! pf_field("#content") !!}
-{!! pf_config(['display']) !!}
+{!! pf_config(['display','delete']) !!}
+<script>
+    console.log(uploader)
+</script>
 </body>
 </html>

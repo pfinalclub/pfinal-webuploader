@@ -306,7 +306,7 @@ table {
     overflow: hidden;
     margin: 5px 1px 1px;
     cursor: pointer;
-    margin-right:5px;
+    margin-right: 5px;
 }
 
 #uploader .filelist div.file-panel span.rotateLeft {
@@ -431,4 +431,25 @@ table {
 #uploader .statusBar .btns .uploadBtn.disabled {
     pointer-events: none;
     opacity: 0.6;
+}
+
+.queueList .image_list {
+    float: left;
+    margin-left: 5px;
+}
+.queueList .image_list:hover .operation_page{
+    opacity: 1;
+}
+.queueList .image_list .operation_page {
+    background-color: #2a2a2a;
+    color: #ffffff;
+    opacity: 0;
+    width: 100%;
+    height: 20px;
+    top: 20px;
+    position: relative;
+}
+
+.queueList .image_list .operation_page span {
+    margin-left: 10px;
 }

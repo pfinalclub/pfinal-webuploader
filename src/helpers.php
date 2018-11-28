@@ -6,7 +6,6 @@ function pf_css()
     return '<!--webuploader css--><link rel="stylesheet" type="text/css" href="/vendor/pfinalWebuploader/dist/webuploader.css"><!--pf_style css--><link href="https://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"><link rel="stylesheet" type="text/css" href="/vendor/pfinalWebuploader/dist/css/pf_style.css">';
 }
 
-
 function pf_js($option = [])
 {
     if (count($option) <= 0) {
@@ -48,7 +47,7 @@ PF_2;
     return $script;
 }
 
-function pf_config( $option = [],$el = "#picker")
+function pf_config($option = [], $el = "#picker", $callback = '')
 {
     $type_view = config('pfinal-uploader.view.type_view', 2);
     $upload_img_server = config('pfinal-uploader.server.upload_img_server', '/pfinal/example/upload');
@@ -56,13 +55,14 @@ function pf_config( $option = [],$el = "#picker")
         case 1:
             break;
         case 2:
-            $result = _set_uploader($el, $upload_img_server, $option);
+            $result = _set_uploader($el, $upload_img_server, $option, $callback);
             break;
     }
     return $result;
 }
 
-function _set_uploader($el, $upload_img_server, $option)
+
+function _set_uploader($el, $upload_img_server, $option, $callback)
 {
     $accept = config('pfinal-uploader.view.accept', '');
     $pick = config('pfinal-uploader.view.pick', '');
@@ -105,17 +105,13 @@ function _set_uploader($el, $upload_img_server, $option)
         $script .= "
 uploader.on( 'fileQueued', function( file ) {
     var li = $(
-            '<div id=\"' + file.id + '\" class=\"file-item thumbnail\">' +
-                '<img>' +
-                '<div class=\"info\">' + file.name + '</div>' +
+            '<div id=\"' + file.id + '\" class=\"file-item thumbnail image_list \">";
+        if ($delete) {
+            $script .= "<div class=\"operation_page\"><span class=\"upload_reset\"><i class=\"fa fa-trash-o\"></i></span></div>";
+        }
+        $script .= "<img>' +
             '</div>'
-            ),
-        img = li.find('img');
-       
-    $(\".queueList\").append( li );
-    // 创建缩略图
-    // 如果为非图片文件，可以不用调用此方法。
-    // thumbnailWidth x thumbnailHeight 为 100 x 100
+            ),img = li.find('img');$(\".queueList\").append( li );
  uploader.makeThumb( file, function( error, src ) {
         if ( error ) {
             img.replaceWith('<span>不能预览</span>');
@@ -123,12 +119,52 @@ uploader.on( 'fileQueued', function( file ) {
         }
         img.attr( 'src', src );
     },";
-        if(count($thumbnail)>0) {
-            $script .="". $thumbnail['thumbnailWidth'] .",". $thumbnail['thumbnailHeight ']  .");});";
+        if (count($thumbnail) > 0) {
+            $script .= "" . $thumbnail['thumbnailWidth'] . "," . $thumbnail['thumbnailHeight '] . ");});";
         } else {
-            $script .="110, 110 );});";
+            $script .= "110, 110 );";
         }
     }
+    if ($delete) {
+        $script .= 'del_img(file);' . _del_img();
+    }
+    $script .= "});";
+    $script .= _set_value($callback);
     $script .= '</script > ';
+    return $script;
+}
+
+function _set_value($callback = "")
+{
+    $html = "
+uploader.on('uploadSuccess', function (file, response) {
+            if (response.code == 200) {
+                $(\"#\" + file.id).attr('data_val', response.data.name);
+                //del_img(file);
+            ";
+    if (!$callback) {
+        $html .= $callback . "(file)";
+    }
+
+    $html .= "} else {
+                $('#' + file.id).remove();
+            }
+        });
+";
+    return $html;
+}
+
+
+function _del_img()
+{
+    $script = "function del_img(file) {
+            $(\"#\" + file.id + \"  .upload_reset\").on('click', function () {
+                uploader.removeFile(file);
+                var _index = $(this);
+                // console.log($(this).parent().attr('data_val'))
+                var img_name = $(this).parent().parent().attr('data_val');
+                ";
+    //TODO ajax 删除服务器上上传的图片
+    $script .= "_index.parent().parent().remove() })}";
     return $script;
 }
