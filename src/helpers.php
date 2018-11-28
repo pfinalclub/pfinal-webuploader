@@ -48,7 +48,7 @@ PF_2;
     return $script;
 }
 
-function pf_config($el = "#picker")
+function pf_config( $option = [],$el = "#picker")
 {
     $type_view = config('pfinal-uploader.view.type_view', 2);
     $upload_img_server = config('pfinal-uploader.server.upload_img_server', '/pfinal/example/upload');
@@ -56,41 +56,79 @@ function pf_config($el = "#picker")
         case 1:
             break;
         case 2:
-            $result = _set_uploader($el, $upload_img_server);
+            $result = _set_uploader($el, $upload_img_server, $option);
             break;
     }
     return $result;
 }
 
-function _set_uploader($el, $upload_img_server)
+function _set_uploader($el, $upload_img_server, $option)
 {
-    $automatic_upload = config('pfinal-uploader.view.automatic_upload');
-    //dd($automatic_upload);
+    $accept = config('pfinal-uploader.view.accept', '');
+    $pick = config('pfinal-uploader.view.pick', '');
+    $thumb = config('pfinal-uploader.view.thumb', '');
+    $auto = config('pfinal-uploader.view.automatic_upload', false);
     $token = csrf_token();
+    $thumbnail = config('pfinal-uploader.view.thumbnail', []);
+
     $script = "
     <script type='text/javascript'>
     var uploader = WebUploader.create({
         swf:'/vendor/pfinalWebuploader/dist/Uploader.swf',
         server:'$upload_img_server',
-        pick:'$el',
-        auto:'$automatic_upload',
-        resize: false,
-        formData:{
-            _token:'$token'
+        auto:'$auto',
+        formData :{
+            _token :\"{$token}\"
         },
-        accept: {
-            title: 'Images',
-            extensions: 'gif,jpg,jpeg,bmp,png',
-            mimeTypes: 'image/*'
-        }
-    })";
-    $display = config('pfinal-uploader.view.display', true);
-    if($display) {
-        //TODO 回显
-        $script .="
-        
         ";
+    if ($pick) {
+        $script .= "pick:'$pick',";
+    } else {
+        $script .= "pick:'$el',";
     }
-    $script .= "</script>";
+    if ($accept) {
+        $script .= "accept:'$accept'";
+    }
+    $script .= " });";
+    $operation = ['display', 'delete', 'progress', 'error'];
+    $display = $delete = $progress = $error = false;
+    if (count($option) > 0) {
+        foreach ($option as $item) {
+            if (!in_array($item, $operation)) {
+                echo('<span style="color: red;font-size: 12px;">参数传递错误,暂未提供服务</span>');
+                break;
+            }
+            $$item = true;
+        }
+    }
+    if ($display) {
+        $script .= "
+uploader.on( 'fileQueued', function( file ) {
+    var li = $(
+            '<div id=\"' + file.id + '\" class=\"file-item thumbnail\">' +
+                '<img>' +
+                '<div class=\"info\">' + file.name + '</div>' +
+            '</div>'
+            ),
+        img = li.find('img');
+       
+    $(\".queueList\").append( li );
+    // 创建缩略图
+    // 如果为非图片文件，可以不用调用此方法。
+    // thumbnailWidth x thumbnailHeight 为 100 x 100
+ uploader.makeThumb( file, function( error, src ) {
+        if ( error ) {
+            img.replaceWith('<span>不能预览</span>');
+            return;
+        }
+        img.attr( 'src', src );
+    },";
+        if(count($thumbnail)>0) {
+            $script .="". $thumbnail['thumbnailWidth'] .",". $thumbnail['thumbnailHeight ']  .");});";
+        } else {
+            $script .="110, 110 );});";
+        }
+    }
+    $script .= '</script > ';
     return $script;
 }

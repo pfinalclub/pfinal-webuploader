@@ -11,8 +11,11 @@
 </head>
 <body>
 
-<div id="content"></div>
+<div id="content">
+
+</div>
+
 {!! pf_field("#content") !!}
-{!! pf_config() !!}
+{!! pf_config(['display']) !!}
 </body>
 </html>

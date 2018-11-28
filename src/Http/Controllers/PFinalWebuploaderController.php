@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: 南丞
+ * User: 运营部
  * Date: 2018/11/21
  * Time: 15:45
  *
@@ -33,6 +33,7 @@ namespace Pfinal\PfinalWebuploader\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PfinalWebuploaderController extends Controller
 {
@@ -49,6 +50,43 @@ class PfinalWebuploaderController extends Controller
 
     public function postUploadPicture(Request $request)
     {
+        $res = '';
+        $upload_type = config('pfinal-uploader.server.upload_type', 'local');
+        switch ($upload_type) {
+            case 'local':
+                $res = $this->_set_local_uploader($request);
+                break;
+        }
+        if ($res) {
+            return response()->json(['code' => 200, 'msg' => '上传成功', 'data' => $res]);
+        }
+        return response()->json(['code' => 200, 'msg' => '上传失败', 'data' => $res]);
+    }
 
+    private function _set_local_uploader($request)
+    {
+        $local = config('pfinal-uploader.server.upload_img_mode.local');
+        if ($request->isMethod('post')) {
+            $file = $request->file('file');
+            //dd($file);
+            if ($file->isValid()) {
+                $ext = $file->getClientOriginalExtension();     // 扩展名
+                $type = $file->getClientMimeType();     // image/jpeg
+                //TODO 文件类型做过滤
+
+                $filename = isset($local['filename']) ? $local['filename'] . '/' . uniqid() . '.' . $ext : date('Y/m/d/ H-i-s') . '-' . uniqid() . '.' . $ext;
+                $filePath = isset($local['filePath']) ?: 'uploads';
+                $res = Storage::putFileAs($filePath, $file, $filename);
+                if ($res) {
+                    return $res;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }
