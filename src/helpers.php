@@ -64,13 +64,20 @@ function pf_config($el = "#picker")
 
 function _set_uploader($el, $upload_img_server)
 {
+    $automatic_upload = config('pfinal-uploader.view.automatic_upload');
+    //dd($automatic_upload);
+    $token = csrf_token();
     $script = "
     <script type='text/javascript'>
     var uploader = WebUploader.create({
         swf:'/vendor/pfinalWebuploader/dist/Uploader.swf',
         server:'$upload_img_server',
         pick:'$el',
+        auto:'$automatic_upload',
         resize: false,
+        formData:{
+            _token:'$token'
+        },
         accept: {
             title: 'Images',
             extensions: 'gif,jpg,jpeg,bmp,png',

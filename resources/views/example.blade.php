@@ -13,6 +13,6 @@
 
 <div id="content"></div>
 {!! pf_field("#content") !!}
-
+{!! pf_config() !!}
 </body>
 </html>
