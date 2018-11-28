@@ -53,6 +53,7 @@ function pf_config($option = [], $el = "#picker", $callback = '')
     $upload_img_server = config('pfinal-uploader.server.upload_img_server', '/pfinal/example/upload');
     switch ($type_view) {
         case 1:
+            $result = _set_uploader_to($el, $upload_img_server, $option, $callback);
             break;
         case 2:
             $result = _set_uploader($el, $upload_img_server, $option, $callback);
@@ -136,8 +137,9 @@ function _set_value($callback = "")
 {
     $html = "
 uploader.on('uploadSuccess', function (file, response) {
+console.log(response)
             if (response.code == 200) {
-                $(\"#\" + file.id).attr('data_val', response.data.name);
+                $(\"#\" + file.id).attr('data_val', response.data);
                 //del_img(file);
             ";
     if (!$callback) {
@@ -165,4 +167,14 @@ function _del_img()
     //TODO ajax 删除服务器上上传的图片
     $script .= "_index.parent().parent().remove() })}";
     return $script;
+}
+
+function _set_uploader_to($el, $upload_img_server, $option, $callback)
+{
+    $token = csrf_token();
+    $script = file_get_contents(public_path('/vendor/pfinalWebuploader/dist/pf_web.js'));
+    $script = preg_replace('/server:(.*),/U', "server:'$upload_img_server',", $script);
+    $script = preg_replace('/_token:(.*),/U', "_token:'$token',", $script);
+    //dd($script);
+    return '<script>' . $script . '</script>';
 }

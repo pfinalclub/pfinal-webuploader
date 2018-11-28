@@ -144,7 +144,7 @@
                 label: '点击选择图片'
             },
             formData: {
-                uid: 123
+                _token:'',
             },
             dnd: '#dndArea',
             paste: '#uploader',
@@ -260,19 +260,6 @@
                     if( isSupportBase64 ) {
                         img = $('<img src="'+src+'">');
                         $wrap.empty().append( img );
-                    } else {
-                        $.ajax('../../server/preview.php', {
-                            method: 'POST',
-                            data: src,
-                            dataType:'json'
-                        }).done(function( response ) {
-                            if (response.result) {
-                                img = $('<img src="'+response.result+'">');
-                                $wrap.empty().append( img );
-                            } else {
-                                $wrap.text("预览出错");
-                            }
-                        });
                     }
                 }, thumbnailWidth, thumbnailHeight );
 
