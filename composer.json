@@ -1,11 +1,21 @@
 {
   "name": "nancheng/pfinal-webuploader",
+  "description":"基于webuploader插件封装的laravel扩展包",
   "license": "MIT",
   "authors": [
     {
       "name": "南丞",
-      "email": "Lampxiezi@163.com"
+      "email": "Lampxiezi@163.com",
+      "homepage": "http://friday-go.cc/"
     }
+  ],
+  "homepage":"https://github.com/Neroxiezi/pfinal-webuploader",
+  "keywords":[
+    "pfinal",
+    "南丞",
+    "Q哥",
+    "webuploader",
+    "php-uploader"
   ],
   "require": {},
   "autoload": {
